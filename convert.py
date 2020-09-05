@@ -1,11 +1,11 @@
-#----------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------
 # Program by Cherkasov.R.
 #
 #
 # Version   Date        Info
-# 0.2       05.09.20    Copying svg-tag from SVG file to VUE file.
-#                       Added the ability to convert multiple files, stop the program if there are no files to convert.
-#----------------------------------------------------------------------------
+# 0.3       05.09.20    Copying svg-tag from SVG file to VUE file.
+#                       Added creation of the 'input files'  folder programmably.
+#-------------------------------------------------------------------------------------------------------------------------------------
 
 import os
 import shutil
@@ -14,6 +14,21 @@ input_folder = "input_files"
 output_folder = "result_files"
 
 def collect_files(folder_name):
+      if os.path.exists(folder_name) is False:
+            os.mkdir(folder_name)
+            print("The'input_files' folder was missig.")
+            print("The'input_files' folder was created.")
+      else:
+            print("The 'input Files' folder was missing - it was created.")
+      answer = ''
+      while answer != 'y' and answer != 'n':
+            answer = str(input("Please insert SVG-fiels into the 'input_files' folder.\nStart the conversion process? (y/n) - y for start, n - for exit\n"))
+      if answer == 'n':
+            print("You aborted process. Program shutting down.")
+            raise SystemExit(1)
+      #elif answer == 'y':
+      #     break
+                  
       files = os.listdir(folder_name)
       svg_counter = 0
       files_list = []
@@ -22,11 +37,11 @@ def collect_files(folder_name):
                   svg_counter +=1
                   files_list.append(i)          
       if svg_counter == 1:
-            print("There is " + str(svg_counter) +" svg file.\n")
+            print("There is " + str(svg_counter) +" SVG-file.\n")
       elif svg_counter > 1:
-            print("There are " + str(svg_counter) +" svg files.\n")
+            print("There are " + str(svg_counter) +" SVG-files.\n")
       else:
-            print("There are no svg files. Please add them and try again.")
+            print("There are no SVG-files. Please add them and try again.")
             raise SystemExit(1)
       return files_list
 
